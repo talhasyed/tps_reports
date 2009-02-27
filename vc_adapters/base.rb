@@ -5,26 +5,37 @@ module TPS
     def initialize(opts={})
       read_options(opts)
       read_commits
-      
+      do_adapter_specific_setup
       self
     end
     
-    def adapter_name
-      :BASE
+    def self.register_vc_adapter(vcs, adapter)
+      @@adapters ||= {}
+      @@adapters[vcs] = adapter
     end
     
+    # override this in your adapter to register your adapter etc
+    def do_adapter_specific_setup; end
+    
+    def self.register_adapter(vcs, adapter_name)
+      @@adapters[vcs] = adapter_name
+    end
+    
+    def self.adapter(vcs)
+      @@adapters[vcs]
+    end
+
     def read_options(opts={})
       @users = opts[:users]
       @repo = opts[:repo]
       @date_range = opts[:date_range]
       @project = opts[:project] || "NOPROJECT"
       
-      puts
-      puts " [#{adapter_name}] processing repo: #{@repo}"
-      puts " [#{adapter_name}] date range: #{@date_range.to_s}"
-      puts " [#{adapter_name}] users: #{@users.join(", ")}"
+      puts " [INIT] processing repo: #{@repo}"
+      puts " [INIT] date range: #{@date_range.to_s}"
+      puts " [INIT] users: #{@users.join(", ")}"
       
-      throw Exception, "No users or repo set" if @users.nil? || @repo.nil?
+      raise Exception, "No users or repo set" if @users.nil? || @repo.nil?
     end
     
     def read_commits
@@ -37,10 +48,6 @@ module TPS
     
     def commits_for_date(date=Date.today.to_s)
       @commits[date].nil? ? nil : [@commits[date].split(";")].flatten
-    end
-    
-    # TODO implement this
-    def commits_for_dates(begin_date, end_date)
     end
   end
 end
