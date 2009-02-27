@@ -1,13 +1,14 @@
+require 'date'
+require 'pp'
+
 require 'rubygems'
 
 gem 'hpricot'
 require 'hpricot'
 
-require 'date'
-require 'pp'
-
 gem 'activesupport'
 require 'activesupport'
 
-require 'vc_adapters/base'
-require 'vc_adapters/svn'
+Dir["vc_adapters/*.rb"].each do |file|
+  require file
+end
