@@ -4,16 +4,13 @@ REPOS = {
     :vcs => :svn
   },
   :local => {
-    :repo => "svn.bubbleshare.com:/git/local",
+    :repo => "/Users/talha/Sites/local",
     :vcs => :git
   }
-  # :csp => {
-  #   :repo => "svn+ssh://talha@svn.bubbleshare.com/svn/csp/",
-  #   :vcs => :svn
-  # }# ,
+  # :csp => { :repo => "svn+ssh://talha@svn.bubbleshare.com/svn/csp/", :vcs => :svn }
 }
 
 USERS = ['talha', 'Talha Syed']
 
-BEGIN_DATE = '2008-09-07'
-END_DATE = '2008-09-10'
+BEGIN_DATE = '2009-04-01'
+END_DATE = '2009-04-30'

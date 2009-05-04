@@ -13,7 +13,7 @@ opts = {
 REPOS.each do |project, repo_details|
   repo_type = repo_details[:vcs]
   repo_loc = repo_details[:repo]
-  repo_adapter = TPS::VCAdapter.adapter(repo_type).new(opts.merge({:repo => repo_loc}))
+  repo_adapter = TPS::VCAdapter.adapter(repo_type).new(opts.merge({:project => project, :repo => repo_loc}))
   repo_readers << repo_adapter
 end
 
@@ -23,7 +23,7 @@ date_range.each do |date|
     commits_for_date = repo_reader.commits_for_date(date.to_s)
     unless commits_for_date.nil?
       commits_for_date.each do |commit|
-        puts "PR-#{repo_reader.project} :: #{commit}"
+        puts "(#{repo_reader.project}) #{commit}"
       end
     end
   end
