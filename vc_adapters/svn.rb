@@ -7,6 +7,7 @@ module TPS
     end
     
     def read_commits
+      puts "[SVN] Reading Commits for Project [#{@project}], #{@repo}"
       @commits = {}
       (Hpricot(`svn log --xml #{@repo}`)/"logentry").each do |entry|
         read_entry(entry)
