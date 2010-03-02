@@ -17,9 +17,9 @@ module TPS
       unfiltered_commits.each do |uc| 
         date = Date.parse uc.to_hash['authored_date'] #uc.date.to_s
         author = uc.author.to_s
-        keep_in = (@users.include?(author) && @date_range.include?(date))
+        should_keep = (@users.include?(author) && @date_range.include?(date))
         messages = uc.message.to_s.split("\n")
-        if keep_in
+        if should_keep
           messages.each {|m| (@commits[date.to_s] ||=[]) << m}
         end
       end
